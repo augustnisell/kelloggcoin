@@ -27,3 +27,25 @@ blockchain = [
 # Anthony's KelloggCoin balance is 2650
 
 # 👇👇👇 Your code HERE 👇👇👇
+
+# Create a hash to store the balance of each user
+# Initialize the hash with all user names (exclude nil) and set the initial value for each user to 0
+balance = {}
+for transaction in blockchain
+    balance[transaction["to_user"]] = 0
+end
+
+# Update the balance of each user based on the transactions
+for transaction in blockchain
+  if balance[transaction["from_user"]].nil?
+    balance[transaction["to_user"]] += transaction["amount"]
+  else
+    balance[transaction["from_user"]] -= transaction["amount"]
+    balance[transaction["to_user"]] += transaction["amount"]
+  end  
+end
+
+# Print the balance of each user
+for user in balance.keys
+  puts "#{user.capitalize}'s KelloggCoin balance is #{balance[user]}"
+end
